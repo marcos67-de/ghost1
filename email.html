@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email link</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle">🌙 Enable Dark Theme</button>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="webapp.html">Home</a></li>
+            <li><a href="face.html">Menu</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+    </nav>
+    <!-- End Navigation Bar -->
+    <main class="container">
+        <h1>Contact Us by Email</h1>
+        <p>Email us at: <a href="mailto:kalulurestraunt@gmail.com">kalulurestraunt@gmail.com</a></p>
+        <form class="contact-form" onsubmit="alert('Thank you for contacting us!'); return false;">
+            <label for="userEmail">Your Email:</label>
+            <input type="email" id="userEmail" name="userEmail" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <button onclick="window.location.href='webapp.html'">Back</button>
+    </main>
+    <script>
+    // Theme toggle logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(isDark) {
+        if(isDark) {
+            body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Disable Dark Theme';
+        } else {
+            body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Enable Dark Theme';
+        }
+    }
+    themeToggle.onclick = function() {
+        const isDark = !body.classList.contains('dark-theme');
+        setTheme(isDark);
+        localStorage.setItem('kalulu-theme', isDark ? 'dark' : 'light');
+    };
+    setTheme(localStorage.getItem('kalulu-theme') === 'dark');
+    </script>
+</body>
+</html>

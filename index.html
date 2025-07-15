@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Kalulu Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="webapp.html">Home</a></li>
+            <li><a href="face.html" class="active">Menu</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+    </nav>
+    <!-- End Navigation Bar -->
+    <main class="container">
+        <h1 class="centered-title aboutus-markdown-title">Discover the Flavors of Kalulu</h1>
+        <blockquote class="aboutus-quote centered-text">
+            Explore our curated menu—crafted with passion, inspired by tradition, and designed to delight every palate.
+        </blockquote>
+        <section class="aboutus-markdown-p centered-text aboutus-markdown-section">
+            <b>Signature Dishes:</b>
+            <ul class="aboutus-markdown-list">
+                <li>Grilled Chicken <span class="aboutus-menu-price">(MK 3,500)</span></li>
+                <li>Beef Stew <span class="aboutus-menu-price">(MK 3,200)</span></li>
+                <li>Vegetarian Delight <span class="aboutus-menu-price">(MK 2,800)</span></li>
+                <li>Fish Curry <span class="aboutus-menu-price">(MK 4,000)</span></li>
+                <li>Rice & Beans <span class="aboutus-menu-price">(MK 2,000)</span></li>
+                <li>Chapati Special <span class="aboutus-menu-price">(MK 2,500)</span></li>
+            </ul>
+            <b>Order your favorites below!</b>
+        </section>
+        <img src="images/redd-francisco-o1SDSKCe8IE-unsplash.jpg" alt="Menu" class="hero" loading="lazy">
+        <form class="menu-form" id="orderForm">
+            <h2 class="menu-form-title">Order Your Meal</h2>
+            <label>Choose your favorite dishes (prices in MK):</label>
+            <div class="menu-checkboxes">
+                <label><input type="checkbox" name="food" value="Grilled Chicken" data-price="3500"> Grilled Chicken (MK 3,500)</label><br>
+                <label><input type="checkbox" name="food" value="Beef Stew" data-price="3200"> Beef Stew (MK 3,200)</label><br>
+                <label><input type="checkbox" name="food" value="Vegetarian Delight" data-price="2800"> Vegetarian Delight (MK 2,800)</label><br>
+                <label><input type="checkbox" name="food" value="Fish Curry" data-price="4000"> Fish Curry (MK 4,000)</label><br>
+                <label><input type="checkbox" name="food" value="Rice & Beans" data-price="2000"> Rice & Beans (MK 2,000)</label><br>
+                <label><input type="checkbox" name="food" value="Chapati Special" data-price="2500"> Chapati Special (MK 2,500)</label>
+            </div>
+            <label for="quantity">Quantity (per dish):</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" required>
+            <label for="payment">Select Payment Method:</label>
+            <select id="payment" name="payment" required>
+                <option value="">-- Select Payment Method --</option>
+                <option value="mobile">Mobile Money</option>
+                <option value="bank">Bank</option>
+            </select>
+            <div id="mobile-options" hidden>
+                <label><input type="radio" name="mobile-option" value="Mpamba"> <img src="images/tnm-mpamba.png" alt="TNM Mpamba" class="pay-logo" loading="lazy"> TNM Mpamba</label>
+                <label><input type="radio" name="mobile-option" value="Airtel Money"> <img src="images/airtel-money.png" alt="Airtel Money" class="pay-logo" loading="lazy"> Airtel Money</label>
+            </div>
+            <div id="bank-options" hidden>
+                <label><input type="radio" name="bank-option" value="FDH Bank"> <img src="images/fdh-bank.png" alt="FDH Bank" class="pay-logo" loading="lazy"> FDH Bank</label>
+                <label><input type="radio" name="bank-option" value="NBS Bank"> <img src="images/nbs-bank.png" alt="NBS Bank" class="pay-logo" loading="lazy"> NBS Bank</label>
+                <label><input type="radio" name="bank-option" value="CENT Bank"> <img src="images/cent-bank.png" alt="CENT Bank" class="pay-logo" loading="lazy"> CENT Bank</label>
+            </div>
+            <div id="totalAmount" class="order-total"></div>
+            <button type="submit" class="order-now-super">Order Now</button>
+        </form>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Kalulu Restaurant. All rights reserved.</p>
+            <p><a href="#privacy-policy" class="footer-link" onclick="document.getElementById('privacy-modal').style.display='block'">Privacy Policy</a></p>
+        </div>
+    </footer>
+    <div id="privacy-modal" class="modal hidden-modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('privacy-modal').style.display='none'">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>Your privacy is important to us. We do not share your personal information with third parties. All data collected is used solely to improve your experience at Kalulu Restaurant.</p>
+        </div>
+    </div>
+    <!-- Move script to end for non-blocking load -->
+    <script>
+    // Theme logic (global, no toggle buttons)
+    (function() {
+        const body = document.body;
+        function setTheme(isDark) {
+            if(isDark) {
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+            }
+        }
+        function applySystemTheme() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark);
+        }
+        let savedTheme = localStorage.getItem('kalulu-theme');
+        window.addEventListener('storage', function(e) {
+            if(e.key === 'kalulu-theme') {
+                savedTheme = e.newValue;
+                if(savedTheme === 'dark') setTheme(true);
+                else if(savedTheme === 'light') setTheme(false);
+                else applySystemTheme();
+            }
+        });
+        if(savedTheme === 'dark') setTheme(true);
+        else if(savedTheme === 'light') setTheme(false);
+        else applySystemTheme();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if(localStorage.getItem('kalulu-theme') === 'system') applySystemTheme();
+        });
+        // Order form logic with price calculation
+        const orderForm = document.getElementById('orderForm');
+        const totalAmountDiv = document.getElementById('totalAmount');
+        const menuCheckboxes = document.querySelectorAll('input[name="food"]');
+        const quantityInput = document.getElementById('quantity');
+        function updateTotal() {
+            let total = 0;
+            menuCheckboxes.forEach(cb => {
+                if(cb.checked) {
+                    const price = parseInt(cb.getAttribute('data-price'), 10);
+                    total += price;
+                }
+            });
+            const qty = parseInt(quantityInput.value, 10) || 1;
+            total = total * qty;
+            totalAmountDiv.textContent = total > 0 ? `Total: MK ${total.toLocaleString()}` : '';
+        }
+        menuCheckboxes.forEach(cb => cb.addEventListener('change', updateTotal));
+        quantityInput.addEventListener('input', updateTotal);
+        // Payment method sub-options logic (radio buttons, no inline styles)
+        const paymentSelect = document.getElementById('payment');
+        const mobileOptions = document.getElementById('mobile-options');
+        const bankOptions = document.getElementById('bank-options');
+        paymentSelect.addEventListener('change', function() {
+            if(this.value === 'mobile') {
+                mobileOptions.hidden = false;
+                bankOptions.hidden = true;
+            } else if(this.value === 'bank') {
+                mobileOptions.hidden = true;
+                bankOptions.hidden = false;
+            } else {
+                mobileOptions.hidden = true;
+                bankOptions.hidden = true;
+            }
+        });
+        orderForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const checked = Array.from(document.querySelectorAll('input[name="food"]:checked'));
+            const qty = parseInt(quantityInput.value, 10) || 1;
+            const payment = paymentSelect.value;
+            let subOption = '';
+            if(checked.length === 0) {
+                alert('Please select at least one dish.');
+                return;
+            }
+            if(!payment) {
+                alert('Please select a payment method.');
+                return;
+            }
+            if(payment === 'mobile') {
+                const selectedMobile = document.querySelector('input[name="mobile-option"]:checked');
+                if(!selectedMobile) {
+                    alert('Please select a Mobile Money provider.');
+                    return;
+                }
+                subOption = selectedMobile.value;
+            } else if(payment === 'bank') {
+                const selectedBank = document.querySelector('input[name="bank-option"]:checked');
+                if(!selectedBank) {
+                    alert('Please select a Bank.');
+                    return;
+                }
+                subOption = selectedBank.value;
+            }
+            let summary = checked.map(cb => `${cb.value} (MK ${parseInt(cb.getAttribute('data-price'), 10).toLocaleString()})`).join(', ');
+            let total = checked.reduce((sum, cb) => sum + parseInt(cb.getAttribute('data-price'), 10), 0) * qty;
+            let paymentSummary = '';
+            if(payment === 'mobile') paymentSummary = `Mobile Money (${subOption})`;
+            else if(payment === 'bank') paymentSummary = `Bank (${subOption})`;
+            alert(`Thank you for ordering: ${summary}\nQuantity: ${qty} each\nTotal: MK ${total.toLocaleString()}\nPayment Method: ${paymentSummary}`);
+        });
+        // Initial total update
+        updateTotal();
+    })();
+    </script>
+</body>
+</html>

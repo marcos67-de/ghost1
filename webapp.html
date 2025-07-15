@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalulu Restaurant - Main App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-toggle-group">
+        <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+        <button id="theme-system" class="theme-toggle">🖥️ System</button>
+    </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="webapp.html" class="active">Home</a></li>
+            <li><a href="face.html">Menu</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+    </nav>
+    <!-- End Navigation Bar -->
+    <main class="container">
+      <h1 class="centered-title aboutus-markdown-title">Welcome to <span class="rabit-svg-span">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" class="rabit-svg">
+          <ellipse cx="16" cy="24" rx="10" ry="6" fill="#fffbe7" stroke="#f9d423" stroke-width="1.5"/>
+          <ellipse cx="11" cy="10" rx="2.2" ry="7" fill="#ffe0e0" stroke="#ff512f" stroke-width="1.2"/>
+          <ellipse cx="21" cy="10" rx="2.2" ry="7" fill="#e0f7fa" stroke="#00bfae" stroke-width="1.2"/>
+          <ellipse cx="16" cy="18" rx="7" ry="7" fill="#fff" stroke="#bbb" stroke-width="1.5"/>
+          <ellipse cx="13.5" cy="17.5" rx="1.1" ry="1.5" fill="#222"/>
+          <ellipse cx="18.5" cy="17.5" rx="1.1" ry="1.5" fill="#222"/>
+          <ellipse cx="16" cy="21.5" rx="2.2" ry="1.1" fill="#f9d423"/>
+          <ellipse cx="16" cy="19.5" rx="0.5" ry="0.2" fill="#ff512f"/>
+          <ellipse cx="14.5" cy="14.5" rx="0.5" ry="0.3" fill="#ff512f"/>
+          <ellipse cx="17.5" cy="14.5" rx="0.5" ry="0.3" fill="#00bfae"/>
+        </svg>
+      </span>Kalulu Restaurant</h1>
+      <blockquote class="aboutus-quote centered-text">
+        Where every meal is a celebration of taste, tradition, and togetherness! Our app brings you closer to the heart of our kitchen and the soul of our service.
+      </blockquote>
+      <ul class="aboutus-markdown-p centered-text aboutus-markdown-list">
+        <li><b>Authentic Cuisine:</b> Chefs blend local ingredients with global inspiration for familiar and exciting dishes.</li>
+        <li><b>Family-Friendly Atmosphere:</b> Every guest feels at home, whether dining in or ordering online.</li>
+        <li><b>Easy Navigation:</b> Explore our menu, learn our story, and connect for reservations, events, or feedback.</li>
+        <li><b>Community Focus:</b> Kalulu is more than a restaurant—it's a gathering place for friends, families, and food lovers.</li>
+      </ul>
+      <p class="aboutus-markdown-p centered-text larger">
+        <b>Our Promise:</b> We are committed to quality, hospitality, and innovation. From our kitchen to your table, every detail is crafted with care. Thank you for choosing Kalulu Restaurant. We look forward to serving you—today and always!
+      </p>
+      <img src="images/redd-francisco-o1SDSKCe8IE-unsplash.jpg" alt="Kalulu Restaurant - Fine Dining" class="hero">
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Kalulu Restaurant. All rights reserved.</p>
+            <p><a href="#privacy-policy" class="footer-link" onclick="document.getElementById('privacy-modal').style.display='block'">Privacy Policy</a></p>
+        </div>
+    </footer>
+    <div id="privacy-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('privacy-modal').style.display='none'">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>Your privacy is important to us. We do not share your personal information with third parties. All data collected is used solely to improve your experience at Kalulu Restaurant.</p>
+        </div>
+    </div>
+    <script>
+        // Theme toggle logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeSystem = document.getElementById('theme-system');
+        const body = document.body;
+        function setTheme(isDark) {
+            if(isDark) {
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '☀️ Light theme';
+            } else {
+                body.classList.remove('dark-theme');
+                themeToggle.textContent = '🌙 Dark theme';
+            }
+        }
+        function setSystemTheme() {
+            localStorage.setItem('kalulu-theme', 'system');
+            applySystemTheme();
+        }
+        function applySystemTheme() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark);
+        }
+        themeToggle.onclick = function() {
+            const isDark = !body.classList.contains('dark-theme');
+            setTheme(isDark);
+            localStorage.setItem('kalulu-theme', isDark ? 'dark' : 'light');
+        };
+        themeSystem.onclick = function() {
+            setSystemTheme();
+        };
+        // On load, set theme from localStorage or system
+        const savedTheme = localStorage.getItem('kalulu-theme');
+        if(savedTheme === 'dark') setTheme(true);
+        else if(savedTheme === 'light') setTheme(false);
+        else applySystemTheme();
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if(localStorage.getItem('kalulu-theme') === 'system') applySystemTheme();
+        });
+    // Hide theme toggle buttons on scroll (all window sizes)
+    (function() {
+      const themeToggleGroup = document.querySelector('.theme-toggle-group');
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            const currentY = window.scrollY;
+            if (currentY > lastScrollY && currentY > 40) {
+              // Scrolling down
+              themeToggleGroup.classList.add('hide-on-scroll');
+            } else {
+              // Scrolling up or at top
+              themeToggleGroup.classList.remove('hide-on-scroll');
+            }
+            lastScrollY = currentY;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener('scroll', onScroll);
+    })();
+    </script>
+</body>
+</html>
+<!-- Add to style.css for animation and decoration -->
